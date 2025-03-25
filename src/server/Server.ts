@@ -1,10 +1,10 @@
 import express from "express";
+import { router } from './routes';
 
 const server = express();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-server.get("/", (_: any, res: any) => {
-    return res.send("Olá mundo");
-});
+server.use(express.json());
+
+server.use(router);
 
 export { server };
