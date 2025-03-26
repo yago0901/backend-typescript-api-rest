@@ -10,7 +10,8 @@ export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts}"], 
     plugins: { js }, 
     extends: ["js/recommended"], 
-    rules: {'@typescript-eslint/no-explicit-any': 'off', 
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off', 
       '@typescript-eslint/no-empty-object-type': 'off'}},
   tseslint.configs.recommended,
 ]);
