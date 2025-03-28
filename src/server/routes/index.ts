@@ -1,5 +1,5 @@
-import { Router, Request, Response } from 'express';
-import {CidadesController} from '../controllers'
+import { Router, Request, Response } from "express";
+import { CidadesController } from "../controllers";
 
 const router = Router();
 
@@ -7,7 +7,6 @@ router.get("/", (_: Request, res: Response) => {
     res.send("Olá mundo");
 });
 
-router.post('/cidades', CidadesController.create);
-
+router.post("/cidades", CidadesController.createValidation, CidadesController.create);
 
 export { router };
