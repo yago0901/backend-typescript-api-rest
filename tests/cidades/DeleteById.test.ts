@@ -1,31 +1,26 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from "http-status-codes";
 
-import { testServer } from '../jest.setup';
+import { testServer } from "../jest.setup";
 
-describe('Cidades - DeleteById', () => {
+describe("Cidades - DeleteById", () => {
+    it("Apaga registro", async () => {
+        const res = await testServer
+            .post("/cidades")
+            .send({ nome: "Caxias do sul" });
 
-  it('Apaga registro', async () => {
+        expect(res.statusCode).toEqual(StatusCodes.CREATED);
 
-    const res = await testServer
-      .post('/cidades')
-      .send({ nome: 'Caxias do sul' });
+        const resApagada = await testServer
+            .delete(`/cidades/${res.body}`)
+            .send();
 
-    expect(res.statusCode).toEqual(StatusCodes.CREATED);
+        expect(resApagada.statusCode).toEqual(StatusCodes.NO_CONTENT);
+    });
 
-    const resApagada = await testServer
-      .delete(`/cidades/${res.body}`)
-      .send();
+    it("Tenta apagar registro que não existe", async () => {
+        const res = await testServer.delete("/cidades/99999").send();
 
-    expect(resApagada.statusCode).toEqual(StatusCodes.NO_CONTENT);
-  });
-  
-  it('Tenta apagar registro que não existe', async () => {
-
-    const res = await testServer
-      .delete('/cidades/99999')
-      .send();
-
-    expect(res.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-    expect(res.body).toHaveProperty('errors.default');
-  });
+        expect(res.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
+        expect(res.body).toHaveProperty("errors.default");
+    });
 });
